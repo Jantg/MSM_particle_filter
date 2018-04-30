@@ -4,6 +4,11 @@ from Binomial_MSM.MSM.likelihood.sharedfunc import gofm
 from numba import jit,float64, int64
 
 def T_mat_template(kbar):
+    """
+    A function to generate transition matrix template
+    
+    kbar = number of multipliers in the model
+    """
     kbar2 = 2**kbar
     A = np.zeros((kbar2,kbar2))
     for i in range(kbar2):
@@ -18,8 +23,8 @@ def transition_mat(A,inpt,kbar):
     transition matrix A
     
     A = a template computed by T_mat_template function
-    inpt = all inputs for MSM
-    kbar = number of multipliers (must be less than 16)
+    inpt = all parameters for MSM (b,m0,gamma_kbar,sigma in this order)
+    kbar = number of multipliers in the model
     """
     # extract all necessary inputs from inpt and give name
     b = inpt[0]
@@ -60,6 +65,15 @@ def transition_mat(A,inpt,kbar):
 
 @jit(float64[:,:](float64[:,:],float64[:],int64))
 def transition_mat_jit(A,inpt,kbar):
+    """
+    When given a template A and inputs this function will compute the 
+    transition matrix A
+    
+    A = a template computed by T_mat_template function
+    inpt = all parameters for MSM (b,m0,gamma_kbar,sigma in this order)
+    kbar = number of multipliers in the model
+    """
+
     b = inpt[0]
     gamma_kbar = inpt[2]
     gamma = np.zeros((kbar,1))
@@ -93,6 +107,14 @@ def transition_mat_jit(A,inpt,kbar):
 
 @jit(float64[:,:](float64[:],int64))
 def transition_mat_new_jit(inpt,kbar):
+    """
+    When given a template A and inputs this function will compute the 
+    transition matrix A
+    
+    inpt = all parameters for MSM (b,m0,gamma_kbar,sigma in this order)
+    kbar = number of multipliers in the model
+    """
+
     b = inpt[0]
     gamma_kbar = inpt[2]
     gamma = np.zeros((kbar,1))
@@ -118,12 +140,18 @@ def transition_mat_new_jit(inpt,kbar):
     
 def likelihood(inpt,kbar,data,A_template,estim_flag,nargout = 1):
     """
-    Compute the likelihood up to the end of the data
-    depending on the number of inputs it will either return sum of daily likelihood
-    or that and a vector of daily likelihood.
+    Computes the likelihood up to the end of the data
+    depending on the number of inputs it will either return sum of daily log likelihood
+    or that and a vector of daily log likelihood.
     The former will be used in starting value calculation while the latter is used in
     parameter estimation and inference.
-    
+
+    inpt = all parameters for MSM (b,m0,gamma_kbar,sigma in this order)
+    kbar = number of multipliers in the model
+    data = data to use for likelihood calculation
+    A_template = template for the transition matrix (see T_mat_template function)
+    estim_flag = will be used in starting value calculation, otherwise set it to None
+    nargout = number of outputs, default is 1, for other values 3 outputs will be returned
     """
     if not hasattr(inpt,"__len__"):
         inpt = [estim_flag[0],inpt,estim_flag[1],estim_flag[2]]

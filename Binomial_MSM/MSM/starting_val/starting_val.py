@@ -8,11 +8,18 @@ from Binomial_MSM.MSM.likelihood.new import likelihood_new
 def starting_values(data,startingvals,kbar,A_template):
     """
     Computes the optimal starting values given original likelihood function
+    
+    data = data to use for likelihood calculation
+    startingvals = if already supplied, this function just returns those values
+    kbar = number of multipliers in the model
+    A_template = template for the transition matrix (see T_mat_template function)
     """
-    if startingvals is None:
+    if not isinstance(startingvals,list):
+        startingvals = [startingvals]
+    if None in startingvals:
         print("No starting values entered: Using grid-search")
         
-        b = np.array([1.5,3,6,20])
+        b = np.array([1.5,5,15,30])
         lb = len(b)
         g = np.array([.1,.5,.9,.95])
         lg = len(g)
@@ -36,15 +43,25 @@ def starting_values(data,startingvals,kbar,A_template):
         startingvals = output_parameters[idx[0],:].tolist()+[sigma]
         output_parameters = output_parameters[idx,:]
         return(startingvals,LLs,output_parameters)
+    elif len(startingvals) != 4:
+        print("4 starting values are required,specify all or set those to None")
+    else:
+        return(startingvals)
 
 def starting_values_new(data,startingvals,kbar):
     """
     Computes the optimal starting values given new likelihood function
+    
+    data = data to use for likelihood calculation
+    startingvals = if already supplied, this function just returns those values
+    kbar = number of multipliers in the model
     """    
-    if startingvals is None:
+    if not isinstance(startingvals,list):
+        startingvals = [startingvals]
+    if None in startingvals:
         print("No starting values entered: Using grid-search")
         
-        b = np.array([1.5,3,6,20])
+        b = np.array([1.5,5,15,30])
         lb = len(b)
         g = np.array([.1,.5,.9,.95])
         lg = len(g)
@@ -68,3 +85,7 @@ def starting_values_new(data,startingvals,kbar):
         startingvals = output_parameters[idx[0],:].tolist()+[sigma]
         output_parameters = output_parameters[idx,:]
         return(startingvals,LLs,output_parameters)
+    elif len(startingvals) != 4:
+        print("4 starting values are required,specify all or set those to None")
+    else:
+        return(startingvals)

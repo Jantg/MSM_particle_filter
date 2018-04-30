@@ -4,6 +4,9 @@ import numpy as np
 def gofm(inpt,kbar):
     """
     A function that calculates all possible volatility states
+    
+    inpt = all parameters for MSM (b,m0,gamma_kbar,sigma in this order)
+    kbar = number of multipliers in the model
     """
     m0 = inpt[1]
     m1 = 2-m0
