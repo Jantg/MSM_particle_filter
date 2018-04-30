@@ -9,4 +9,6 @@ setuptools.setup(name = "MSM",
       packages = setuptools.find_packages(),
       scripts = ['run_sampledata.py'],
       python_requires = '>=3',
+      license = 'MIT License',
+      package_data={'':['*.csv']},
      )

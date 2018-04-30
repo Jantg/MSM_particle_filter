@@ -149,7 +149,6 @@ def likelihood(inpt,kbar,data,A_template,estim_flag,nargout = 1):
     inpt = all parameters for MSM (b,m0,gamma_kbar,sigma in this order)
     kbar = number of multipliers in the model
     data = data to use for likelihood calculation
-    A_template = template for the transition matrix (see T_mat_template function)
     estim_flag = will be used in starting value calculation, otherwise set it to None
     nargout = number of outputs, default is 1, for other values 3 outputs will be returned
     """

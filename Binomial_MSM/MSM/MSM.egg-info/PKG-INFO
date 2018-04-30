@@ -5,7 +5,8 @@ Summary: UNKNOWN
 Home-page: https://github.com/JJcomb/663project
 Author: Jan Tomoya Greve, Jaeyeon Lee
 Author-email: jan.tomoya.greve@duke.edu, jaeyeon.lee@duke.edu
-License: UNKNOWN
+License: MIT License
+Description-Content-Type: UNKNOWN
 Description: UNKNOWN
 Platform: UNKNOWN
 Requires-Python: >=3
