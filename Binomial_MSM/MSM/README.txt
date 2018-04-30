@@ -1,0 +1,21 @@
+MSM/
+	likelihood/
+		__init__.py
+		new.py
+		original.py
+		sharefunc.py
+	MSM.egg_info/
+		dependency_links.txt
+		PKG-INFO
+		SOURCES.txt
+		top_level.txt		
+	prediction/
+		__init__.py
+		predict.py
+	starting_val/
+		__init__.py
+		starting_val.py
+	MSM.py
+	README.txt
+	run_sampledata.py
+	setup.py
